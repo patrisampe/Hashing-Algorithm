@@ -3,59 +3,75 @@
 #include <random>
 #include <string>
 #include <limits>
+#include <set>
 using namespace std;
 
+typedef set<int> SI;
+typedef set<int>::const_iterator IT;
+
+// Varibales globales
 int N;
+double V;
+double P;
+string file1, file2;
+SI enteros;
 
-typedef vector<int> VI;
-
-void input(string& file1, string& file2) {
+// Entrada de los datos
+void input() {
 	cout << "Introduce el valor n: ";
 	cin >> N;
+	cout << "Introduce el valor por el que multiplicaremos n para obtener la longitud del texto: ";
+	cin >> V;
+	cout << "Introduce la proporcion esperada de numeros del diccionario en el texto: ";
+	cin >> P;
 	cout << "Introduce el nombre del archivo diccionario: ";
 	cin >> file1;
 	cout << "Introduce el nombre del archivo texto: ";
 	cin >> file2;
 }
 
-bool in(int x, const VI& v, int pos) {
-	for (int i = 0; i <= pos; ++i) {
-		if (x == v[i]) return true;
-	}
-	return false;
-}
-
-void generar_enteros(VI& v) {
+// Generacion de N enteros distintos
+void generar_enteros() {
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dis(0, numeric_limits<int>::max());
-	for (int i = 0; i < N; ++i) {
-		int r = dis(gen);
-		while (in(r, v, i)) r = dis(gen);
-		v[i] = r;
-	}
+    uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
+    while (enteros.size() < N) {
+    	int r = dis(gen);
+    	enteros.insert(r);
+    }
 }
 
-void escribir(const VI& enteros, string dic, string text) {
-	ofstream file1, file2;
-  	file1.open (dic + ".txt");
-  	file2.open(text + ".txt");
-  	for (int i = 0; i < N; ++i) {
-  		file1 << enteros[i] << endl;
+// Escritura de los numeros en los ficheros
+void escribir() {
+	ofstream f1, f2;
+  	f1.open (file1 + ".txt");
+  	f2.open(file2 + ".txt");
+  	for (auto e : enteros) {
+  		f1 << e << endl;
   	}
-  	for (int i = 0; i < N; ++i) {
-  		file2 << enteros[i] << endl;
-  		file2 << enteros[i] + 12 << endl;
-  		file2 << enteros[i] + 12321 << endl;
+  	random_device rd1, rd2, rd3;
+	mt19937 gen1(rd1());
+	mt19937 gen2(rd2());
+	mt19937 gen3(rd3());
+	uniform_real_distribution<double> dis1(0, 100);
+	uniform_int_distribution<int> dis2(0, N-1);
+	uniform_int_distribution<int> dis3(0, numeric_limits<int>::max());
+  	for (int i = 0; i < V*N; ++i) {
+	    if (dis1(gen1) < P) {
+	    	IT it(enteros.begin());
+	    	advance(it, dis2(gen2));
+	    	f2 << *it << endl;	
+	    }
+	    else {
+	    	f2 << dis3(gen3) << endl;
+	    }
   	}
-  	file1.close();
-  	file2.close();
+  	f1.close();
+  	f2.close();
 }
 
 int main() {
-	string file1, file2;
-	input(file1, file2);
-	VI enteros(N);
-	generar_enteros(enteros);
-	escribir(enteros, file1, file2);
+	input();
+	generar_enteros();
+	escribir();
 }
