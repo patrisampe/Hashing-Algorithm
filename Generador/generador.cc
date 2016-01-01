@@ -35,7 +35,7 @@ void generar_enteros() {
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
-    while (enteros.size() < N) {
+    while ((int)enteros.size() < N) {
     	int r = dis(gen);
     	enteros.insert(r);
     }
