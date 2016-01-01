@@ -1,10 +1,13 @@
+#include <iostream>
 #include <vector>
 using namespace std;
 
+typedef vector<int> VI;
+
 class Metodos {
 public:
-	void radixSort(vector<int>& v);
+	void radixSort(VI& v);
 private:
-	void countingSort(vector<int>& v, int exp);
-	int getMax(const vector<int>& v);
+	void countingSort(VI& v, int exp);
+	int getMax(const VI& v);
 };

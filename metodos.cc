@@ -1,10 +1,9 @@
 #include "metodos.h"
 using namespace std;
 
-typedef vector<int> VI;
-
 void Metodos::radixSort(VI& v) {
     int m = getMax(v);
+    cout << "MAX: " << m << endl;
     for (int exp = 1; m/exp > 0; exp *= 10)
         countingSort(v, exp);
 }
@@ -18,7 +17,7 @@ void Metodos::countingSort(VI& v, int exp)
 	for (int i = 0; i < n; ++i)
 		count[ (v[i]/exp)%10 ]++;
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 1; i < 10; ++i)
 		count[i] += count[i - 1];
 
 	for (int i = n - 1; i >= 0; --i)
