@@ -23,7 +23,7 @@ void Metodos::countingSort(VI& v, int exp)
 
 	for (int i = n - 1; i >= 0; --i)
     {
-        output[count[ (arr[i]/exp)%10 ] - 1] = v[i];
+        output[count[ (v[i]/exp)%10 ] - 1] = v[i];
         count[ (v[i]/exp)%10 ]--;
     }
 
