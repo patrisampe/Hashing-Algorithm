@@ -3,7 +3,6 @@ using namespace std;
 
 void Metodos::radixSort(VI& v) {
     int m = getMax(v);
-    cout << "MAX: " << m << endl;
     for (int exp = 1; m/exp > 0; exp *= 10)
         countingSort(v, exp);
 }
