@@ -3,6 +3,8 @@
 #include <string>
 #include "metodos.h"
 #include <math.h>
+#include <ctime>
+
 using namespace std;
 
 typedef vector<bool> VI1;
