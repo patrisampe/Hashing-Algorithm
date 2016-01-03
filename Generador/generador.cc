@@ -14,13 +14,14 @@ int N;
 double V;
 double P;
 string file1, file2;
+int SEED;
 SI enteros;
 
 // Usage
 void usage() {
 	cout << "Usage:" << endl;
 	cout << "Input interactivo: ./generador.exe" << endl;
-	cout << "Input directo: ./generador.exe N V P nombreDiccionario nombreTexto" << endl;
+	cout << "Input directo: ./generador.exe N V P nombreDiccionario nombreTexto SEED" << endl;
 }
 
 // Entrada de los datos
@@ -35,6 +36,8 @@ void inputInteractivo() {
 	cin >> file1;
 	cout << "Introduce el nombre del archivo texto: ";
 	cin >> file2;
+	cout << "Introduce la semilla: ";
+	cin >> SEED;
 }
 
 void inputDirecto(char *argv[]) {
@@ -48,7 +51,7 @@ void inputDirecto(char *argv[]) {
 // Generacion de N enteros distintos
 void generar_enteros() {
     random_device rd;
-    mt19937 gen(rd());
+    mt19937 gen(SEED);
     uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
     cout << "Inicio generacion de los numeros enteros" << endl;
     while ((int)enteros.size() < N) {
@@ -69,9 +72,9 @@ void escribir() {
   	}
   	cout << "Fin escritura en el diccionario" << endl;
   	random_device rd1, rd2, rd3;
-	mt19937 gen1(rd1());
-	mt19937 gen2(rd2());
-	mt19937 gen3(rd3());
+	mt19937 gen1(SEED);
+	mt19937 gen2(SEED);
+	mt19937 gen3(SEED);
 	uniform_real_distribution<double> dis1(0, 100);
 	uniform_int_distribution<int> dis2(0, 10);
 	uniform_int_distribution<int> dis3(0, numeric_limits<int>::max());
@@ -97,8 +100,8 @@ void escribir() {
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) inputInteractivo();
-	else if (argc == 6) inputDirecto(argv);
-	else usage();
+	else if (argc == 7) inputDirecto(argv);
+	else {usage(); return 0;}
 	generar_enteros();
 	escribir();
 }
