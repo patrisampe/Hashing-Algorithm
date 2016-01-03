@@ -1,4 +1,6 @@
-#!/bin/bash       
+#!/bin/bash
+make clean
+make       
 for pow in {2..6}
 do
 	for V in 2 3 4

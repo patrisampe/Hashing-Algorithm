@@ -66,7 +66,7 @@ void escribir() {
 	ofstream f1, f2;
   	f1.open (file1 + ".txt");
   	f2.open(file2 + ".txt");
-  	cout << "Inicio escritura en el diccionario" << endl;
+  	cout << "Inicio escritura en el diccionario " << file1 << endl;
   	for (auto e : enteros) {
   		f1 << e << endl;
   	}
@@ -80,7 +80,7 @@ void escribir() {
 	uniform_int_distribution<int> dis3(0, numeric_limits<int>::max());
 	IT it(enteros.begin());
 	int pos = 0;
-	cout << "Inicio escritura en el texto" << endl;
+	cout << "Inicio escritura en el texto " << file2 << endl;
   	for (int i = 0; i < V*N; ++i) {
 	    if (dis1(gen1) < P) {
 	    	if (pos + 10 >= N - 1) {pos = 0; it = enteros.begin();}
