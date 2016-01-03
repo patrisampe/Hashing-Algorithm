@@ -8,6 +8,12 @@ using namespace std;
 
 typedef vector<int> VI;
 
+// Mesures
+double tiempoTotal = 0.0;
+double hit = 0;
+double miss = 0;
+double comps = 0;
+
 void usage() {
 	cout << "./cercaTotal.exe NomFitxerDiccionari NomFitxerText" << endl;
 }
@@ -34,14 +40,18 @@ void analizarTodo(ifstream& file, const VI& diccionario, const VI& texto) {
 	int encontrados = 0;
 	int N = texto.size();
 	int n = diccionario.size();
+
+	int start_s = clock();
 	while (i < N and j < n) {
-		if (texto[i] == diccionario[j]) {++i; ++encontrados;}
-		else if (texto[i] < diccionario[j]) ++i;
+		if (texto[i] == diccionario[j]) {++i; ++hit;}
+		else if (texto[i] < diccionario[j]) {++i; ++miss;}
 		else ++j;
-		++comps;
 	}
-	cout << "Numero toal de comparaciones: " << comps << endl;
-	cout << "Elementos encontrados: " << encontrados << endl;
+	int stop_s = clock();
+
+	while (i < N) ++miss;
+	tiempoTotal = (stop_s - start_s)/double(CLOCKS_PER_SEC);
+	comps = min(2*n, 2*N);
 } 
 
 int main(int argc, char *argv[]) {
@@ -61,13 +71,13 @@ int main(int argc, char *argv[]) {
 	m.radixSort(diccionario);
 	m.radixSort(texto);
 	int stop_s = clock();
-	cout << "time: " << (stop_s - start_s)/double(CLOCKS_PER_SEC) << endl;
 
-	for (int i = 0; i < 9; ++i) cout << diccionario[i] << endl;
-	cout << endl;
-	for (int i = 0; i < 11; ++i) cout << texto[i] << endl;
 	analizarTodo(file2, diccionario, texto);
 	file1.close();
 	file2.close();
+
+	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
+		 << tiempoTotal << ","
+		 << comps/(hit+miss) << endl;
 }
 

@@ -7,6 +7,14 @@ using namespace std;
 typedef vector<int> VI;
 typedef pair<bool,int> PBI;
 
+// Mesures
+double tempsHit = 0.0;
+double tempsMiss = 0.0;
+double compHit = 0;
+double compMiss = 0;
+int hit = 0;
+int miss = 0;
+
 void usage() {
 	cout << "./cercaDicotomica.exe NomFitxerDiccionari NomFitxerText" << endl;
 }
@@ -27,18 +35,18 @@ void leer(ifstream& file, VI& v) {
 	}
 }
 
-PBI buscar(int x, const VI& diccionario, int i, int j) {
-	if (i > j) return PBI(false, 0);
-	int mid = i + ((j - i) / 2);
-	if (x < diccionario[mid]) {
-		PBI p = buscar(x, diccionario, i, mid-1);
-		return PBI(p.first, p.second+1);
+PBI buscar(int x, const VI& diccionario) {
+	int i = 0;
+	int comps = 0;
+	int j = (int)diccionario.size() - 1;
+	while (i <= j) {
+		int mid = i + ((j - i) / 2);
+		if (x == diccionario[mid]) return PBI(true, comps+1);
+		else if (x < diccionario[mid]) j = mid-1;
+		else i = mid+1;
+		++comps;
 	}
-	if (x > diccionario[mid]) {
-		PBI p = buscar(x, diccionario, mid+1, j);
-		return PBI(p.first, p.second+2);
-	}
-	return PBI(true, 2);
+	return PBI(false, comps);
 }
 
 void analizar(ifstream& file, const VI& diccionario) {
@@ -46,10 +54,20 @@ void analizar(ifstream& file, const VI& diccionario) {
 	int num;
 	for (int i = 0; i < n; ++i) {
 		file >> num;
-		PBI res = buscar(num, diccionario, 0, (int)diccionario.size()-1);
-		cout << "Buscamos numero " << num; 
-		if (res.first) cout << ", comparaciones " << res.second << endl;
-		else cout << " NOT FOUND" << endl;
+
+		int start_s = clock();
+		PBI res = buscar(num, diccionario);
+		int stop_s = clock();
+		if (res.first) {
+			tempsHit += (stop_s - start_s)/double(CLOCKS_PER_SEC);
+			compHit += res.second;
+			++hit;
+		}
+		else {
+			tempsMiss += (stop_s - start_s)/double(CLOCKS_PER_SEC);
+			compMiss += res.second;
+			++miss;
+		}
 	}
 } 
 
@@ -62,10 +80,17 @@ int main(int argc, char *argv[]) {
 	VI diccionario(n);
 	leer(file1, diccionario);
 	Metodos m;
+
+	int start_s = clock();
 	m.radixSort(diccionario);
-	//for (int i = 0; i < n; ++i) cout << diccionario[i] << endl;
+	int stop_s = clock();
+	
 	analizar(file2, diccionario);
 	file1.close();
 	file2.close();
+
+	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
+		 << tempsHit/hit << "," << tempsMiss/miss << ","
+		 << compHit/hit << "," << compMiss/miss << endl;
 }
 
