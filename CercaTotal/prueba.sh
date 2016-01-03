@@ -13,3 +13,5 @@ do
 		done
 	done
 done
+cp resultats.txt resultats.csv
+sed -i '1itempsCreacio,tempsHit,tempsMiss,compsHit,compsMiss' resultats.csv
