@@ -84,13 +84,14 @@ int main(int argc, char *argv[]) {
 	int start_s = clock();
 	m.radixSort(diccionario);
 	int stop_s = clock();
-	
+
 	analizar(file2, diccionario);
 	file1.close();
 	file2.close();
 
 	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
 		 << tempsHit/hit << "," << tempsMiss/miss << ","
-		 << compHit/hit << "," << compMiss/miss << endl;
+		 << compHit/hit << "," << compMiss/miss << ","
+		 << (compHit+compMiss)/(hit+miss) << endl;
 }
 
