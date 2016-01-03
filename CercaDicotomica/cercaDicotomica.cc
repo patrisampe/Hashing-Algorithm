@@ -89,9 +89,15 @@ int main(int argc, char *argv[]) {
 	file1.close();
 	file2.close();
 
-	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
-		 << tempsHit/hit << "," << tempsMiss/miss << ","
-		 << compHit/hit << "," << compMiss/miss << ","
-		 << (compHit+compMiss)/(hit+miss) << endl;
+	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ",";
+	if (hit > 0) cout << tempsHit/hit << ",";
+	else cout << "0,";
+	if (miss > 0) cout << tempsMiss/miss << ",";
+	else cout << "0,";
+	if (hit > 0) cout << compHit/hit << ",";
+	else cout << "0,";
+	if (miss > 0) cout << compMiss/miss << ",";
+	else cout << "0,";
+	cout << (compHit+compMiss)/(hit+miss) << endl;
 }
 

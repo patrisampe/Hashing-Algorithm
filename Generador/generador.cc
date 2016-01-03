@@ -51,7 +51,7 @@ void inputDirecto(char *argv[]) {
 // Generacion de N enteros distintos
 void generar_enteros() {
     random_device rd;
-    mt19937 gen(SEED);
+    mt19937 gen(SEED+21456);
     uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
     cout << "Inicio generacion de los numeros enteros" << endl;
     while ((int)enteros.size() < N) {
@@ -72,9 +72,9 @@ void escribir() {
   	}
   	cout << "Fin escritura en el diccionario" << endl;
   	random_device rd1, rd2, rd3;
-	mt19937 gen1(SEED);
-	mt19937 gen2(SEED);
-	mt19937 gen3(SEED);
+	mt19937 gen1(SEED+12334);
+	mt19937 gen2(SEED+213);
+	mt19937 gen3(SEED+4242148);
 	uniform_real_distribution<double> dis1(0, 100);
 	uniform_int_distribution<int> dis2(0, 10);
 	uniform_int_distribution<int> dis3(0, numeric_limits<int>::max());

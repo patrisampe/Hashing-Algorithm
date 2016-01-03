@@ -35,9 +35,8 @@ void leer(ifstream& file, VI& v) {
 }
 
 void analizarTodo(ifstream& file, const VI& diccionario, const VI& texto) {
-	int i, j, comps;
-	i = j = comps = 0;
-	int encontrados = 0;
+	int i, j;
+	i = j = 0;
 	int N = texto.size();
 	int n = diccionario.size();
 
@@ -46,12 +45,12 @@ void analizarTodo(ifstream& file, const VI& diccionario, const VI& texto) {
 		if (texto[i] == diccionario[j]) {++i; ++hit;}
 		else if (texto[i] < diccionario[j]) {++i; ++miss;}
 		else ++j;
+		comps += 2;
 	}
 	int stop_s = clock();
 
-	while (i < N) ++miss;
+	if (i < N) miss += N-i+1;
 	tiempoTotal = (stop_s - start_s)/double(CLOCKS_PER_SEC);
-	comps = min(2*n, 2*N);
 } 
 
 int main(int argc, char *argv[]) {
@@ -77,7 +76,9 @@ int main(int argc, char *argv[]) {
 	file2.close();
 
 	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
-		 << tiempoTotal << ","
+		 << tiempoTotal/(hit+miss) << ","
+		 << tiempoTotal/(hit+miss) << ","
+		 << comps/(hit+miss) << endl;
 		 << comps/(hit+miss) << endl;
 }
 
