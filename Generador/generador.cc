@@ -3,11 +3,11 @@
 #include <random>
 #include <string>
 #include <limits>
-#include <set>
+#include <unordered_set>
 using namespace std;
 
-typedef set<int> SI;
-typedef set<int>::const_iterator IT;
+typedef unordered_set<int> SI;
+typedef unordered_set<int>::const_iterator IT;
 
 // Varibales globales
 int N;
@@ -16,8 +16,15 @@ double P;
 string file1, file2;
 SI enteros;
 
+// Usage
+void usage() {
+	cout << "Usage:" << endl;
+	cout << "Input interactivo: ./generador.exe" << endl;
+	cout << "Input directo: ./generador.exe N V P nombreDiccionario nombreTexto" << endl;
+}
+
 // Entrada de los datos
-void input() {
+void inputInteractivo() {
 	cout << "Introduce el valor n: ";
 	cin >> N;
 	cout << "Introduce el valor por el que multiplicaremos n para obtener la longitud del texto: ";
@@ -30,15 +37,25 @@ void input() {
 	cin >> file2;
 }
 
+void inputDirecto(char *argv[]) {
+	N = atoi(argv[1]);
+	V = atof(argv[2]);
+	P = atof(argv[3]);
+	file1 = argv[4];
+	file2 = argv[5];
+}
+
 // Generacion de N enteros distintos
 void generar_enteros() {
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
+    cout << "Inicio generacion de los numeros enteros" << endl;
     while ((int)enteros.size() < N) {
     	int r = dis(gen);
     	enteros.insert(r);
     }
+    cout << "Fin generacion de los numeros enteros" << endl;
 }
 
 // Escritura de los numeros en los ficheros
@@ -46,32 +63,42 @@ void escribir() {
 	ofstream f1, f2;
   	f1.open (file1 + ".txt");
   	f2.open(file2 + ".txt");
+  	cout << "Inicio escritura en el diccionario" << endl;
   	for (auto e : enteros) {
   		f1 << e << endl;
   	}
+  	cout << "Fin escritura en el diccionario" << endl;
   	random_device rd1, rd2, rd3;
 	mt19937 gen1(rd1());
 	mt19937 gen2(rd2());
 	mt19937 gen3(rd3());
 	uniform_real_distribution<double> dis1(0, 100);
-	uniform_int_distribution<int> dis2(0, N-1);
+	uniform_int_distribution<int> dis2(0, 10);
 	uniform_int_distribution<int> dis3(0, numeric_limits<int>::max());
+	IT it(enteros.begin());
+	int pos = 0;
+	cout << "Inicio escritura en el texto" << endl;
   	for (int i = 0; i < V*N; ++i) {
 	    if (dis1(gen1) < P) {
-	    	IT it(enteros.begin());
-	    	advance(it, dis2(gen2));
+	    	if (pos + 10 >= N - 1) {pos = 0; it = enteros.begin();}
+	    	int incr = dis2(gen2);
+	    	pos = pos + incr;
+	    	advance(it, incr);
 	    	f2 << *it << endl;	
 	    }
 	    else {
 	    	f2 << dis3(gen3) << endl;
 	    }
   	}
+  	cout << "Fin escritura en el texto" << endl;
   	f1.close();
   	f2.close();
 }
 
-int main() {
-	input();
+int main(int argc, char *argv[]) {
+	if (argc == 1) inputInteractivo();
+	else if (argc == 6) inputDirecto(argv);
+	else usage();
 	generar_enteros();
 	escribir();
 }
