@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "metodos.h"
+#include "../metodos.h"
 using namespace std;
 
 typedef vector<int> VI;
@@ -16,7 +16,8 @@ int hit = 0;
 int miss = 0;
 
 void usage() {
-	cout << "./cercaDicotomica.exe NomFitxerDiccionari NomFitxerText" << endl;
+	cout << "./cercaDicotomica.exe NomFitxerDiccionari NomFitxerText SortingAlgorithm" << endl;
+	cout << "SortingAlgorithm = 1 usa Quicksort, SortingAlgorithm = 2 usa Radix Sort" << endl;
 }
 
 int lines(ifstream& file) {
@@ -72,18 +73,26 @@ void analizar(ifstream& file, const VI& diccionario) {
 } 
 
 int main(int argc, char *argv[]) {
-	if (argc != 3) usage();
+	if (argc != 4) usage();
 	ifstream file1, file2;
 	file1.open(argv[1]);
 	file2.open(argv[2]);
 	int n = lines(file1);
 	VI diccionario(n);
 	leer(file1, diccionario);
+	int start_s;
+	int stop_s;
 	Metodos m;
-
-	int start_s = clock();
-	m.radixSort(diccionario);
-	int stop_s = clock();
+	if (string(argv[3]) == "2") {
+		start_s = clock();
+		m.radixSort(diccionario);
+		stop_s = clock();
+	}
+	else {
+		start_s = clock();
+		m.quicksort(diccionario, 0, n-1);
+		stop_s = clock();
+	}
 
 	analizar(file2, diccionario);
 	file1.close();
@@ -94,6 +103,7 @@ int main(int argc, char *argv[]) {
 	else cout << "0,";
 	if (miss > 0) cout << tempsMiss/miss << ",";
 	else cout << "0,";
+	cout << (tempsHit+tempsMiss)/(hit+miss) << ",";
 	if (hit > 0) cout << compHit/hit << ",";
 	else cout << "0,";
 	if (miss > 0) cout << compMiss/miss << ",";

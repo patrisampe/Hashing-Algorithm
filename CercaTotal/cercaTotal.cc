@@ -3,7 +3,7 @@
 #include <string>
 #include <math.h>
 #include <ctime>
-#include "metodos.h"
+#include "../metodos.h"
 using namespace std;
 
 typedef vector<int> VI;
@@ -15,7 +15,8 @@ double miss = 0;
 double comps = 0;
 
 void usage() {
-	cout << "./cercaTotal.exe NomFitxerDiccionari NomFitxerText" << endl;
+	cout << "./cercaTotal.exe NomFitxerDiccionari NomFitxerText SortingAlgorithm" << endl;
+	cout << "SortingAlgorithm = 1 usa Quicksort, SortingAlgorithm = 2 usa Radix Sort" << endl;
 }
 
 int lines(ifstream& file) {
@@ -54,22 +55,32 @@ void analizarTodo(ifstream& file, const VI& diccionario, const VI& texto) {
 } 
 
 int main(int argc, char *argv[]) {
-	if (argc != 3) usage();
+	if (argc != 4) usage();
 	ifstream file1, file2;
 	file1.open(argv[1]);
 	file2.open(argv[2]);
 	int n = lines(file1);
 	VI diccionario(n);
 	leer(file1, diccionario);
-	n = lines(file2);
-	VI texto(n);
+	int N = lines(file2);
+	VI texto(N);
 	leer(file2, texto);
 
-	int start_s = clock();
+	int start_s;
+	int stop_s;
 	Metodos m;
-	m.radixSort(diccionario);
-	m.radixSort(texto);
-	int stop_s = clock();
+	if (string(argv[3]) == "2") {
+		start_s = clock();
+		m.radixSort(diccionario);
+		m.radixSort(texto);
+		stop_s = clock();
+	}
+	else {
+		start_s = clock();
+		m.quicksort(diccionario, 0, n-1);
+		m.quicksort(texto, 0, N-1);
+		stop_s = clock();
+	}
 
 	analizarTodo(file2, diccionario, texto);
 	file1.close();
@@ -77,8 +88,6 @@ int main(int argc, char *argv[]) {
 
 	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
 		 << tiempoTotal/(hit+miss) << ","
-		 << tiempoTotal/(hit+miss) << ","
-		 << comps/(hit+miss) << ","
 		 << comps/(hit+miss) << endl;
 }
 
