@@ -5,6 +5,8 @@
 #include <list>
 #include <vector>
 #include <ctime>
+#include <cstdlib>
+#include <time.h>
 
 using namespace std;
 
@@ -27,7 +29,13 @@ void usage() {
 }
 
 int hash1(int num){
-  return num%M;
+      double aux= num*0.67;
+  int auxi = aux;
+  double dd = aux-auxi;
+  double de = dd*M;
+  int rr = de;
+  
+  return rr;
   
 }
 
@@ -140,6 +148,7 @@ dd analizar(VI& text, const PB& diccionario) {
 
 int main(int argc, char *argv[]) {
 	if (argc != 3) usage();
+	srand(time(0));
 	ifstream file1, file2;
 	file1.open(argv[1]);
 	file2.open(argv[2]);
@@ -156,9 +165,13 @@ int main(int argc, char *argv[]) {
 	leertexto(file2,texto);
 	VI dict(n);
 	leertexto(file1,dict);
-	for(int i =1; i<=n;++i){
-	  if(i> 100)i = 2*10*i-1;
-	  M=i;
+	int j = 1;
+	//for(int i =1; i<=n;++i){
+	   
+	for(int i = 1;i<=n;++i){
+	  if(i> 100)i = 13*i+17;
+	  M = i;
+	  
 	  PB diccionario(M);
 	  int start_s = clock();
 	  leer(dict, diccionario);
@@ -171,23 +184,24 @@ int main(int argc, char *argv[]) {
 	   //stop_s = clock();
 	  temps aux = auxi.first;
 	  temps comp = auxi.second;
-	  cout << M << ","<<timeaux<<","<<aux.first<<","<<aux.second<<"," <<comp.first <<"," << comp.second<<endl;
+	  //cout << M << ","<<timeaux<<","<<aux.first<<","<<aux.second<<"," <<comp.first <<"," << comp.second<<endl;
 	   timebuscarbo = timebuscarbo + aux.first;
 	   timebuscardolent = timebuscardolent + aux.second;
 	   cbo = cbo+comp.first;
 	   cdolent = cdolent +comp.second;
+	   j = j+1;
 	}
 	
-	timecrear=timecrear/n;
-	timebuscarbo=timebuscarbo/n;
-	timebuscardolent=timebuscardolent/n;
-	cbo = cbo/n;
-	cdolent = cdolent/n;
+	timecrear=timecrear/j;
+	timebuscarbo=timebuscarbo/j;
+	timebuscardolent=timebuscardolent/j;
+	cbo = cbo/j;
+	cdolent = cdolent/j;
 	
-	cout << "mitges " << " temps crear "<< timecrear << " temps buscar si encertar " << timebuscarbo << " no encerta " << timebuscardolent <<" comparacion si encertes " << cbo << " si falles " << cdolent << endl;
+	cout << timecrear << ", " << timebuscarbo << " , " << timebuscardolent <<" , " << cbo << " , " << cdolent << " , " << costcomp/cm << " , " << costHash/hm << endl;
 	costHash = costHash/hm;
 	costcomp = costcomp/cm;
-	cout << " cost hash " << costHash << " cost comparacio " << costcomp << endl;
+	//cout << " cost hash " << costHash << " cost comparacio " << costcomp << endl;
 	
 	file1.close();
 	file2.close();

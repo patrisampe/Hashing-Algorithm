@@ -205,24 +205,23 @@ int main(int argc, char *argv[]) {
 	  VI1 diccionario1(M,false);
 	  leer1(diccionario, diccionario1);
 	  int d = clock();
-	  timecrear = (d-s)/double(CLOCKS_PER_SEC);
+	  timecrear = timecrear +(d-s)/double(CLOCKS_PER_SEC);
 	  dd aux= analizar1(text, diccionario1,dico);
-	  timebuscar = aux.first;
+	  timebuscar = timebuscar + aux.first;
 	  temps uu= aux.second;
-	  aciertos = uu.first;
-	 fallos =  uu.second;
-	 cout << M << ", "<<timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << endl;
-	   
-	 j = j+1;
+	  aciertos = aciertos + uu.first;
+	 
+	  fallos = fallos + uu.second;
+	  j = j+1;
 	}
 	
-	//timecrear=timecrear/j;
-	//timebuscar=timebuscar/j;
-	//fallos = fallos;
-	//aciertos = aciertos;
+	timecrear=timecrear/j;
+	timebuscar=timebuscar/j;
+	fallos = fallos;
+	aciertos = aciertos;
 	
 	
-	//cout << timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << " ," << costcomp/cm << endl;
+	cout << timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << " ," << costcomp/cm << " ,"<< costHash1/hm1 << " ,"<< costHash2/hm2 << " ," << costHash3/hm3 << endl;
 	//costHash1 = costHash/hm;
 	//costcomp = costcomp/cm;
 	//cout << " cost hash " << costHash << " cost comparacio " << costcomp << endl;

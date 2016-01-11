@@ -73,7 +73,7 @@ void analizar(ifstream& file, const VI& diccionario) {
 } 
 
 int main(int argc, char *argv[]) {
-	if (argc != 4) usage();
+	if (argc != 7) usage();
 	ifstream file1, file2;
 	file1.open(argv[1]);
 	file2.open(argv[2]);
@@ -98,6 +98,7 @@ int main(int argc, char *argv[]) {
 	file1.close();
 	file2.close();
 
+	cout << argv[4] << ", "<< argv[5] << " ," <<argv[6]<< " ,";
 	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ",";
 	if (hit > 0) cout << tempsHit/hit << ",";
 	else cout << "0,";

@@ -1,8 +1,8 @@
-hashtable.exe: hashtable.o 
-	g++ -o hashtable.exe -std=c++11 -Wall  *.o
+hash.exe: hashtablesensem.o 
+	g++ -o hash.exe -std=c++11 -Wall  *.o
 
-hashtable.o: hashtable.cc
-	g++ -c hashtable.cc -std=c++11 -Wall  
+hashtablesensem.o: hashtablesensemv2.cc
+	g++ -c hashtablesensemv2.cc -std=c++11 -Wall  
 
 clean:
 	rm *.o

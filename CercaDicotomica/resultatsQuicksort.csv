@@ -1,3 +1,4 @@
+n,v,t,tempsCreacio,tempsConsulta,compsConsulta
 tempsCreacio,tempsHit,tempsMiss,tempsConsulta,compsHit,compsMiss,compsConsulta
 2.5e-05,7.33333e-07,9.54545e-07,8.55e-07,5.77778,6.8,6.34
 2.6e-05,7.95276e-07,9.58904e-07,8.55e-07,5.68504,6.79452,6.09

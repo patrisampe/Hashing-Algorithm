@@ -9,12 +9,12 @@ do
 		do
 			n=$((10**$pow))
 			echo ./cercaTotal.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt
-			./cercaTotal.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 1 >> resultatsQuicksort.txt
-			./cercaTotal.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 2 >> resultatsRadix.txt
+			./cercaTotal.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 1 $n $v $p>> resultatsQuicksort.txt
+			./cercaTotal.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 2 $n $v $p>> resultatsRadix.txt
 		done
 	done
 done
-cp resultatsQuicksort.txt resultatsQuicksort.csv
-sed -i '1itempsCreacio,tempsConsulta,compsConsulta' resultatsQuicksort.csv
-cp resultatsRadix.txt resultatsRadix.csv
-sed -i '1itempsCreacio,tempsConsulta,compsConsulta' resultatsRadix.csv
+cp resultatsQuicksort.txt resultatsQuicksortv2.csv
+sed -i '1in,v,t,tempsCreacio,tempsConsulta,compsConsulta' resultatsQuicksort.csv
+cp resultatsRadix.txt resultatsRadixv2.csv
+sed -i '1in,v,t,tempsCreacio,tempsConsulta,compsConsulta' resultatsRadix.csv

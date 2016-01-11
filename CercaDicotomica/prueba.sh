@@ -9,12 +9,12 @@ do
 		do
 			n=$((10**$pow))
 			echo ./cercaDicotomica.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt
-			./cercaDicotomica.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 1 >> resultatsQuicksort.txt
-			./cercaDicotomica.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 2 >> resultatsRadix.txt
+			./cercaDicotomica.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 1 $n $v $p>> resultatsQuicksort.txt
+			./cercaDicotomica.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt 2 $n $v $p>> resultatsRadix.txt
 		done
 	done
 done
-cp resultatsQuicksort.txt resultatsQuicksort.csv
-sed -i '1itempsCreacio,tempsHit,tempsMiss,tempsConsulta,compsHit,compsMiss,compsConsulta' resultatsQuicksort.csv
-cp resultatsRadix.txt resultatsRadix.csv
-sed -i '1itempsCreacio,tempsHit,tempsMiss,tempsConsulta,compsHit,compsMiss,compsConsulta' resultatsRadix.csv
+cp resultatsQuicksort.txt resultatsQuicksortdico.csv
+sed -i '1in,v,t,tempsCreacio,tempsConsulta,compsConsulta' resultatsQuicksort.csv
+cp resultatsRadix.txt resultatsRadixdico.csv
+sed -i '1in,v,t,tempsCreacio,tempsConsulta,compsConsulta' resultatsRadix.csv

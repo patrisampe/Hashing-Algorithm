@@ -4,8 +4,8 @@ bloom.exe: bloom.o metodos.o
 metodos.o: metodos.h metodos.cc
 	g++ -c metodos.cc -std=c++11 -Wall
 
-bloom.o: blomm.cc metodos.h
-	g++ -c blomm.cc -std=c++11 -Wall  
+bloom.o: blommsensemv2.cc metodos.h
+	g++ -c blommsensemv2.cc -std=c++11 -Wall  
 
 clean:
 	rm *.o

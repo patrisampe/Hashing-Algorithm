@@ -173,7 +173,7 @@ dd analizar1(const VI& text,const VI1& diccionario, const PB& dico) {
 
 
 int main(int argc, char *argv[]) {
-	if (argc != 3) usage();
+	if (argc != 6) usage();
 	ifstream file1, file2;
 	file1.open(argv[1]);
 	file2.open(argv[2]);
@@ -197,32 +197,36 @@ int main(int argc, char *argv[]) {
 	double aciertos =0;
 
 	int j = 0;
-	for(int i = 1;i<=n;++i){
-	  if(i> 100)i = 10*i;
-	  M = i;
+	//for(int i = 1;i<=n;++i){
+	  //if(i> 100)i = 10*i;
+	  M = n1 +1049;
 	  
 	  int s = clock();
 	  VI1 diccionario1(M,false);
 	  leer1(diccionario, diccionario1);
 	  int d = clock();
-	  timecrear = (d-s)/double(CLOCKS_PER_SEC);
+	  timecrear = timecrear +(d-s)/double(CLOCKS_PER_SEC);
 	  dd aux= analizar1(text, diccionario1,dico);
-	  timebuscar = aux.first;
+	  timebuscar = timebuscar + aux.first;
 	  temps uu= aux.second;
-	  aciertos = uu.first;
-	 fallos =  uu.second;
-	 cout << M << ", "<<timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << endl;
-	   
-	 j = j+1;
-	}
+	  aciertos = aciertos + uu.first;
+	 
+	  fallos = fallos + uu.second;
+	//  j = j+1;
+	//}
+	j = 1;
+	timecrear=timecrear/j;
+	timebuscar=timebuscar/j;
+	fallos = fallos;
+	aciertos = aciertos;
 	
-	//timecrear=timecrear/j;
-	//timebuscar=timebuscar/j;
-	//fallos = fallos;
-	//aciertos = aciertos;
+	//cout << argv[3] << ", "<< argv[4] << " ," <<argv[4]<< " ,";
 	
+	cout << argv[3] << ", "<< argv[4] << " ," <<argv[4]<< " ,";
 	
-	//cout << timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << " ," << costcomp/cm << endl;
+	cout << timecrear << ", " << timebuscar << " , " << timebuscar << " ,"<< timebuscar<< " ," <<3* costcomp/cm << " ,"<< 3* costcomp/cm << ","<< 3* costcomp/cm << " ,"<< costcomp/cm << " ,"<< costHash1/hm1 << " ,"<< costHash2/hm2 << " ," << costHash3/hm3 << " ," << aciertos << " ,"<< fallos<<endl; 
+	
+	//cout << timecrear << " , " << timebuscar << ", "<< fallos <<", "<< aciertos << " ," << costcomp/cm << " ,"<< costHash1/hm1 << " ,"<< costHash2/hm2 << " ," << costHash3/hm3 << endl;
 	//costHash1 = costHash/hm;
 	//costcomp = costcomp/cm;
 	//cout << " cost hash " << costHash << " cost comparacio " << costcomp << endl;
