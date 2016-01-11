@@ -1,7 +1,7 @@
 #!/bin/bash
 make clean
 make
-for pow in {2..5}
+for pow in {2..6}
 do
 	for v in 2 3 4
 	do
