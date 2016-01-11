@@ -198,13 +198,14 @@ int main(int argc, char *argv[]) {
 
 	int j = 0;
 	for(int i = 1;i<=n;++i){
-	  if(i> 100)i = 10*i;
+	  //if(i> 100)i = 10*i;
 	  M = i;
 	  
 	  int s = clock();
 	  VI1 diccionario1(M,false);
 	  leer1(diccionario, diccionario1);
 	  int d = clock();
+	  //cout << "AUX" << endl;
 	  timecrear = (d-s)/double(CLOCKS_PER_SEC);
 	  dd aux= analizar1(text, diccionario1,dico);
 	  timebuscar = aux.first;

@@ -9,9 +9,9 @@ do
 		do
 			n=$((10**$pow))
 			echo ./bloom.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt
-			./bloom.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt $n $v $p>> resultatbloomsensemv2.txt
+			./bloom.exe ../Generador/dict-$n-$v-$p.txt ../Generador/text-$n-$v-$p.txt $n $v $p>> bloomsensemv2.txt
 		done
 	done
 done
-cp resultatbloomsensemv2.txt resultatbloomsensemv2.csv
-sed -i '1itempsCreacio,tempsbuscar,encerts,fallos,comp,h1,h2,h3' resultatbloomsensemv2.csv
+cp bloomsensemv2.txt resultatbloomsensemv3.csv
+sed -i '1itempsCreacio,tempsbuscar,encerts,fallos,comp,h1,h2,h3' resultatbloomsensemv3.csv
