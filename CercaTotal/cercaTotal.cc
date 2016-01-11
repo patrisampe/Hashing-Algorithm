@@ -89,6 +89,10 @@ int main(int argc, char *argv[]) {
 	cout << argv[4] << ", "<< argv[5] << " ," <<argv[6]<< " ,";
 	cout << (stop_s - start_s)/double(CLOCKS_PER_SEC) << ","
 		 << tiempoTotal/(hit+miss) << ","
+		 << tiempoTotal/(hit+miss) << ","
+		 << tiempoTotal/(hit+miss) << ","
+		 << comps/(hit+miss) << ","
+		 << comps/(hit+miss) << ","
 		 << comps/(hit+miss) << endl;
 }
 
